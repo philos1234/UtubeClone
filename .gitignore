@@ -3,3 +3,8 @@ node_modules
 .env
 .cache
 .yarn-integrity
+
+# FuseBox cache
+.fusebox/
+package-lock.json
+videos

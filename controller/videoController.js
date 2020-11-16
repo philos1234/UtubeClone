@@ -1,8 +1,14 @@
 import routes from "../routes";
+import Video from "../models/Video";
 
-export const home = (req,res) =>{ 
+//await is only vaild in async
+export const home = async (req,res) =>{ 
+   try{ const videos = await Video.find({});
     res.render("home",{pageTitle : "Home", videos});
-
+    }catch(error){
+        console.log(error);
+        res.render("home", {pageTitle: "Home", videos: []});
+    }
 }; ///views/home.pug를 찾아 렌더링해 보여줌  default dir = views
 
 export const search = (req,res) => {
@@ -14,9 +20,10 @@ export const search = (req,res) => {
 };
 
 export const getUpload = (req,res) => res.render("upload",{pageTitle : "Upload"});
-export const postUpload = (req,res) => {
+export const postUpload = async (req,res) => {
     const {
-        body :{file,title, description}
+        body :{title, description},
+        file : { path }
     } = req;
     
     res.redirect(routes.videoDetail(324393));
