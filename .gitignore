@@ -3,8 +3,13 @@ node_modules
 .env
 .cache
 .yarn-integrity
-
+.eslintrc
 # FuseBox cache
 .fusebox/
 package-lock.json
-videos
+uploads
+
+
+
+#생각정리
+think
