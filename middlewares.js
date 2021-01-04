@@ -14,7 +14,7 @@ export const localsMiddleware = (req,res,next) =>{
     next(); //다음으로 컨트롤 넘기는 것과 같이..
 };
 
-export const uploadVideo = multerVideo.single("videoFile");
+export const uploadVideo = multerVideo.single("videoFile");//videoFile is tag name
     //single := could upload a single video
     //"string" := string is html type file name parameter
 export const ContentSecurity = (req,res,next) => {

@@ -41,7 +41,7 @@ export const postUpload = async (req,res) => {
         description
     });
     //videos/id
-    res.redirect(routes.videoDetail(newVideo.id));// get newVideo's id
+    res.redirect(newVideo.fileUrl);// get newVideo's id
 
 
 };

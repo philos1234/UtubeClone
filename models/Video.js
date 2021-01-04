@@ -18,7 +18,11 @@ const VideoSchema = new mongoose.Schema({// 몽구스의 스키마 객체
     createAt: {
         type : Date,
         default: Date.now
-    }
+    },
+    comments:[{ //해당 비디오에 달린 comment들의 배열저장
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }]
 
 });
 

@@ -10,6 +10,7 @@ const CommentSchema = new mongoose.Schema({
         default: Date.now
     }
 
+
 });
 const model = mongoose.model("Comment",CommentSchema);
 export default model;

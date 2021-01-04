@@ -1,0 +1,10 @@
+//Why to put "_" in front of filename in SCSS?
+//When we add “_” in front of the SCSS file, it means that it is partial for SCSS. 
+//When the compiler gets any SCSS files starting with “_”, it simply ignores the file. 
+//If you want this partial for SCSS to be included for styles, you must use @import. 
+
+$red: #ea232c;
+$dark-red: #bb2f2a;
+$grey: #f5f5f5;
+$black: #444444;
+$dark-grey: #e7e7e7;
