@@ -2,12 +2,14 @@ import multer from "multer";
 import routes from "./routes"
 
 const multerVideo = multer({dest:"uploads/videos/"}); //dest : location where file gonna be stored
+const multerAvatar = multer({dest: "uploads/avatars/"});
 
 //변수 설정 미들웨어 pug에 해당하는 변수설정 가능
+//res.local 은 request에 요청에 응답할 local variable이 저장되어있다
 export const localsMiddleware = (req,res,next) =>{
     res.locals.siteName = "WeTube";
     res.locals.routes = routes;
-    res.locals.user = req.user || null; // user 없으면 빈 객체 넘김
+    res.locals.loggedUser = req.user || null; // user 없으면 빈 객체 넘김
     //user에 파싱된 세션 유저 정보 있음
 
     next(); //다음으로 컨트롤 넘기는 것..
@@ -32,6 +34,7 @@ export const onlyPrivate = (req, res, next) => {
 export const uploadVideo = multerVideo.single("videoFile");//videoFile is tag name
     //single := could upload a single video
     //"string" := string is html type file name parameter
+export const uploadAvatar = multerAvatar.single("avatar");
 export const ContentSecurity = (req,res,next) => {
     res.setHeader("Content-Security-Policy","script-src 'self' https://archive.org");
     return next();

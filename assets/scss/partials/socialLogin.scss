@@ -22,6 +22,12 @@
         color:white;
     }
     .social-login--facebook{
+        a{
+            &:visited
+            {
+                color: white; // 링크 클릭 글자 색 바꾸지 않기
+            }
+        }
         background-color: #3a5998;
         color: white;
     }

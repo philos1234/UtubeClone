@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -12,13 +13,14 @@ import userRouter  from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes";
-import dotenv from "dotenv";
 import "./passport";
 
-const app = express();
 
-const CokieStore = MongoStore(session);
 dotenv.config();
+
+const app = express();
+const CokieStore = MongoStore(session);
+
 app.use(helmet({
     contentSecurityPolicy:false,
 }));
@@ -40,7 +42,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//local 변수를 global하게 사용할 수 있도록 하기 위한 미들웨어
 app.use(localsMiddleware);
+
 
 //영상 임의로 받아오게 하는 미들웨어 실행
 app.use(ContentSecurity);

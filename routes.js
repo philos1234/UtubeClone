@@ -23,6 +23,15 @@ const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO ="/:id/delete";
 
+//githun_passport
+
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK ="/auth/github/callback";
+const ME = "/me";
+
+//facebook_passport
+const FB = "/auth/facebook";
+const FB_CALLBACK ="/auth/facebook/callback";
 
 const routes = {
 
@@ -66,7 +75,12 @@ const routes = {
         }else{
             return DELETE_VIDEO;
         }
-    }
+    },
+    gitHub: GITHUB,
+    githubCallback: GITHUB_CALLBACK,
+    me: ME,
+    facebook: FB,
+    facebookCallback: FB_CALLBACK
 };
 
 

@@ -1,19 +1,35 @@
 import passport from "passport";
 import GithubStrategy from "passport-github";
-import { githubLoginCallback } from "./controller/userController";
+import FacebookStrategy from "passport-facebook";
+import { githubLoginCallback, facebookLoginCallback } from "./controller/userController";
 import User from "./models/User";
+import routes from "./routes";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 passport.use(User.createStrategy());
 
 passport.use(
-    new GithubStrategy({
+    new GithubStrategy(
+        {
         clientID: process.env.GH_ID,
         clientSecret: process.env.GH_SECRET,
-        callbackURL:"http://localhost:4000/auth/github/callback"
-    }),
-    //callback function
-    githubLoginCallback
-)
+        callbackURL:`http://localhost:4000${routes.githubCallback}`
+    },
+    githubLoginCallback //콜백함수
+    )
+   
+);
+passport.use(
+    new FacebookStrategy({
+        clientID: process.env.FB_ID,
+        clientSecret: process.env.FB_SECRET,
+        callbackURL: `http://localhost:4000${routes.facebookCallback}`
+    },
+    facebookLoginCallback
+    )
+);
 
 // passport가 인식하는 부분
 passport.serializeUser(User.serializeUser());
