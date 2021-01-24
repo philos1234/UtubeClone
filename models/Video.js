@@ -22,7 +22,11 @@ const VideoSchema = new mongoose.Schema({// 몽구스의 스키마 객체
     comments:[{ //해당 비디오에 달린 comment들의 배열저장
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
-    }]
+    }],
+    creator:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 
 });
 

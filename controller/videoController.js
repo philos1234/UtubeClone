@@ -38,9 +38,11 @@ export const postUpload = async (req,res) => {
     const newVideo = await Video.create({ //Video 는 mongoose 객체임
         fileUrl:path,
         title,
-        description
+        description,
+        creator:req.user.id
     });
-    //videos/id
+    req.user.videos.push(newVideo.id);
+    req.user.save();
     res.redirect(newVideo.fileUrl);// get newVideo's id
 
 
@@ -52,7 +54,8 @@ export const videoDetail = async (req,res) =>{
         
     } = req;
     try{
-    const video = await Video.findById(id);
+    const video = await Video.findById(id).populate("creator"); //id 안의 creator 정보를 파싱해서 가져올 수 있다.
+    console.log(video)
     res.render("videoDetail",{pageTitle : video.title, video}); //pug view로 변수들을 보낸다. 
     }catch(error){
         res.redirect(routes.home);
@@ -65,8 +68,11 @@ export const getEditVideo = async (req,res) =>{
     } = req;
     try{
         const video = await Video.findById(id);
-        res.render("editVideo",{pageTitle:`Edit ${video.title}`,video});
-
+        if(video.creator !== req.user.id){
+            throw Error();
+        }else{
+            res.render("editVideo",{pageTitle:`Edit ${video.title}`,video});
+        }
     }catch(error){
         res.redirect(routes.home);
     }
@@ -90,7 +96,12 @@ export const deleteVideo =  async (req,res) =>{
     } = req;
 
     try{
-        await Video.findOneAndRemove({_id : id});
+        const video = await Video.findOneAndRemove(id);
+        if(video.creator !== req.user.id){
+            throw Error();
+        }else{
+            await Video.findOneAndRemove({_id: id});
+        }
         
     }catch(error){
         console.log(error);
