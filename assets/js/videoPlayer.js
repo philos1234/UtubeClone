@@ -8,6 +8,13 @@ const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
 
+const registerView = () => {
+    const videoId = window.location.href.split("/videos/")[1];
+    fetch(`/api/${videoId}/view`,{
+        method: "POST"
+    });
+};
+
 function handlePlayClick(){
     if(videoPlayer.paused){
         videoPlayer.play();
@@ -73,6 +80,7 @@ function setTotalTime(){
 }
 
 function handleEnded(){ //끝나면 자동으로 비디오 시작으로 돌아감
+    registerView(); //view count 증가
     videoPlayer.currentTime = 0;
     playBtn.innerHTML = '<i class="fas fa-play"></i>';
 }

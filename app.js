@@ -13,7 +13,13 @@ import userRouter  from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes";
+import apiRouter from "./routers/apiRouter";
 import "./passport";
+
+
+//use메서드는 모든 HTTP 메서드에 대해 요청 주소만 일치하면 실행되지만 
+//get, post, put, patch, delete 같은 메서드는 주소뿐만 아니라 HTTP 메서드까지 일치 하는 요청일 때만 실행된다. 
+
 
 
 dotenv.config();
@@ -53,7 +59,7 @@ app.use(ContentSecurity);
 app.use(routes.home,globalRouter); //join, search, home... 등을 연결
 app.use(routes.users,userRouter);
 app.use(routes.videos,videoRouter);
-
+app.use(routes.api, apiRouter);
 
 
 

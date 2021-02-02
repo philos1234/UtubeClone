@@ -1,5 +1,6 @@
 import routes from "../routes";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 
 //await is only vaild in async
 export const home = async (req,res) =>{ 
@@ -54,7 +55,9 @@ export const videoDetail = async (req,res) =>{
         
     } = req;
     try{
-    const video = await Video.findById(id).populate("creator"); //id 안의 creator 정보를 파싱해서 가져올 수 있다.
+    const video = await Video.findById(id)
+    .populate("creator") //id 안의 creator 정보를 파싱해서 가져올 수 있다.
+    .populate("comment"); //id 안의 comment 정보를 파싱해서 가져올 수 있다.
     console.log(video)
     res.render("videoDetail",{pageTitle : video.title, video}); //pug view로 변수들을 보낸다. 
     }catch(error){
@@ -109,3 +112,45 @@ export const deleteVideo =  async (req,res) =>{
     res.redirect(routes.home);
 
 };
+
+// video view 증가
+
+export const postRegisterView = async (req, res) =>{
+    const{
+        params:{id}
+    } = req;
+    try{
+        const video = await Video.findById(id);
+        video.views += 1;
+        video.save();
+        res.status(200);
+    }catch(error){
+        res.status(400);
+    }finally{
+        res.end();
+    }
+};
+
+//Add comment
+
+export const postAddComment = async (req, res) => {
+    const {
+        params : { id },
+        body : { comment },
+        user
+    } = req;
+    try{
+        const video = await Video.findById(id);
+        const newComment = await Comment.create({
+            text: comment,
+            creator: user.id
+        });
+        video.comments.push(newComment.id);
+        video.save();
+
+    }catch (error){
+        res.status(400);
+    }finally{
+        res.end();
+    }
+}
